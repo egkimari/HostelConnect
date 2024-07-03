@@ -56,22 +56,3 @@
     </div>
 @endsection
 
-/*/ 
-Main function
-Route::get('/', function () {
-    return view('welcome');
-}); */
-
-//Route
-//Get or Post
-//function(){ echo 'about page';}
-//http://127.0.0.1:8000/ 
-
-
-/*
- @extends('frontend.layout')
-
-@section('content')
-    <h1>User_Profile Page</h1>
-@endsection 
-*/

@@ -52,7 +52,7 @@ Route::get('/about', function () {
 
 // Route for contact page
 Route::get('/contact', function () {
-    return view('frontend.contact');
+    return view('frontend.contact.blade');
 });
 
 // Route for displaying all hostels
