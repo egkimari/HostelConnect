@@ -14,7 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite
 </head>
 <body>
     <div id="app">
@@ -76,5 +76,8 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Load Vite Bundled Assets -->
+    <script src="{{ mix('/js/app.js') }}"></script>
 </body>
 </html>
