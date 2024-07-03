@@ -1,68 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HostelConnect - Find Your Ideal Hostel</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+@extends('frontend.layout')
 
-    <!-- Header Section -->
-    <header>
+@section('content')
+    <!-- Hero Section -->
+    <section class="hero-section">
         <div class="container">
-            <h1>HostelConnect</h1>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#hostels">Hostels</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#login">Log in</a></li>
-                    <li><a href="#signup">Sign up</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Main Content Section -->
-    <main>
-        <section id="home" class="dark-bg">
-            <div class="container">
-                <div class="main-content">
-                    <h2>Welcome to HostelConnect</h2>
-                    <p>The Ultimate Hostel Solution To Your Housing Problem</p>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Welcome to HostelConnect</h1>
+                    <p>Your ultimate platform for finding and managing hostels.</p>
+                    <a href="{{ url('/hostels') }}" class="btn btn-primary">Browse Hostels</a>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="card-deck">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">Find a Hostel</h3>
-                            <p class="card-text">Browse through our extensive list of hostels and find the one that suits your needs.</p>
-                        </div>
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="feature-item">
+                        <i class="fa fa-search"></i>
+                        <h3>Search Hostels</h3>
+                        <p>Find the perfect hostel that meets your needs.</p>
                     </div>
-
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">Manage Your Bookings</h3>
-                            <p class="card-text">Keep track of your bookings and payments easily through our user-friendly interface.</p>
-                        </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="feature-item">
+                        <i class="fa fa-list-alt"></i>
+                        <h3>List Your Hostel</h3>
+                        <p>Are you a hostel owner? List your hostel with us.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="feature-item">
+                        <i class="fa fa-user"></i>
+                        <h3>User Dashboard</h3>
+                        <p>Manage your bookings and profile easily.</p>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <!-- Footer Section -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 HostelConnect. All rights reserved.</p>
-            <div class="social-icons">
-                <a href="#">Instagram</a>
-                <a href="#">LinkedIn</a>
-            </div>
         </div>
-    </footer>
-
-</body>
-</html>
+    </section>
+@endsection

@@ -3,22 +3,51 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Hostel; // Make sure to import the Hostel model
+use App\Models\Hostel;
 
 class HostelController extends Controller
 {
-    // Method to show a single hostel by ID
+    public function index()
+    {
+        $hostels = Hostel::all();
+        return view('hostels.index', compact('hostels'));
+    }
+
+    public function create()
+    {
+        return view('hostels.create');
+    }
+
+    public function store(Request $request)
+    {
+        $hostel = new Hostel($request->all());
+        $hostel->user_id = auth()->id();
+        $hostel->save();
+        return redirect()->route('hostels.index');
+    }
+
     public function show($id)
     {
-        // Fetch the hostel details using the ID
-        $hostel = Hostel::find($id);
+        $hostel = Hostel::findOrFail($id);
+        return view('hostels.show', compact('hostel'));
+    }
 
-        // Check if the hostel exists
-        if (!$hostel) {
-            abort(404, 'Hostel not found');
-        }
+    public function edit($id)
+    {
+        $hostel = Hostel::findOrFail($id);
+        return view('hostels.edit', compact('hostel'));
+    }
 
-        // Pass the hostel details to the view
-        return view('frontend.hostels.show', compact('hostel'));
+    public function update(Request $request, $id)
+    {
+        $hostel = Hostel::findOrFail($id);
+        $hostel->update($request->all());
+        return redirect()->route('hostels.index');
+    }
+
+    public function destroy($id)
+    {
+        Hostel::findOrFail($id)->delete();
+        return redirect()->route('hostels.index');
     }
 }
