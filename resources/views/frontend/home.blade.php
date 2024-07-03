@@ -3,7 +3,7 @@
 @section('content')
 <style>
     body {
-        background-image: url('C:\Users\egith\Desktop\HostelConnect\public\Images\background.jpg');
+        background-image: url('{{(C:\Users\egith\Desktop\HostelConnect\public\Images\background.jpg0)}}');
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
