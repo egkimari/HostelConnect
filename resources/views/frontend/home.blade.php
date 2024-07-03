@@ -1,45 +1,37 @@
-@extends('frontend.layout')
+@extends('layouts.app')
 
 @section('content')
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Welcome to HostelConnect</h1>
-                    <p>Your ultimate platform for finding and managing hostels.</p>
-                    <a href="{{ url('/hostels') }}" class="btn btn-primary">Browse Hostels</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<style>
+    body {
+        background-image: url('C:\Users\egith\Desktop\HostelConnect\public\Images\background.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .card {
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
 
-    <!-- Features Section -->
-    <section class="features-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="feature-item">
-                        <i class="fa fa-search"></i>
-                        <h3>Search Hostels</h3>
-                        <p>Find the perfect hostel that meets your needs.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="feature-item">
-                        <i class="fa fa-list-alt"></i>
-                        <h3>List Your Hostel</h3>
-                        <p>Are you a hostel owner? List your hostel with us.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="feature-item">
-                        <i class="fa fa-user"></i>
-                        <h3>User Dashboard</h3>
-                        <p>Manage your bookings and profile easily.</p>
-                    </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header text-center">{{ __('Home') }}</div>
+                <div class="card-body text-center">
+                    <h1>Welcome to HostelConnect</h1>
+                    <p>Find and manage hostel accommodations easily with HostelConnect.</p>
+                    <a href="{{ route('hostels') }}" class="btn btn-primary">View Hostels</a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 @endsection
