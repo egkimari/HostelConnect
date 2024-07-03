@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HostelController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,19 +32,20 @@ Route::get('/', function () {
     <h1>User_Profile Page</h1>
 @endsection 
 */
+
+
+// Route to the main layout
 Route::get('/', function () {
     return view('frontend.layout');
 });
 
-// Routes Well Defined For Each 
-
+// Routes for various pages
 Route::get('home', function () {
     return view('frontend.home');
 });
 
-// Route to other pages
 Route::get('/about', function () {
-    return view ('frontend.about');
+    return view('frontend.about');
 });
 
 Route::get('/contact', function () {
@@ -52,7 +53,7 @@ Route::get('/contact', function () {
 });
 
 Route::get('/hostels', function () {
-    return view('frontend.hostels');
+    return view('frontend.hostels'); 
 });
 
 // Authentication routes
@@ -69,3 +70,5 @@ Route::get('/profile', function () {
     return view('frontend.profile');
 })->middleware('auth'); // Example middleware usage for authentication
 
+// Route to show a single hostel by ID
+Route::get('/hostels/{id}', [HostelController::class, 'show'])->name('hostels.show');
