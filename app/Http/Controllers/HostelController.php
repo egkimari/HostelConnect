@@ -10,7 +10,7 @@ class HostelController extends Controller
     public function index()
     {
         $hostels = Hostel::all();
-        return view('hostels.index', compact('hostels'));
+        return view('hostels.', compact('hostels'));
     }
 
     public function create()

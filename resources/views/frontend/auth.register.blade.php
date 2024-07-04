@@ -1,11 +1,11 @@
 @extends('frontend.layout')
-@section('title', 'Register - HostelConnect')
 
+@section('title', 'Register - HostelConnect')
 
 @section('content')
 <style>
     body {
-        background-image: url('C:\Users\egith\Desktop\HostelConnect\public\Images\background.jpg');
+        background-image: url('{{ asset("Images/background.jpg") }}');
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
