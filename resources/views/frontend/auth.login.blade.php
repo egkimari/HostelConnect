@@ -1,9 +1,11 @@
 @extends('frontend.layout')
+@section('title', 'Login - HostelConnect')
+
 
 @section('content')
 <style>
     body {
-        background-image: url('C:\Users\egith\Desktop\HostelConnect\public\Images\logreg.jpg');
+        background-image: url('C:\Users\egith\Desktop\HostelConnect\public\Images\background.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
