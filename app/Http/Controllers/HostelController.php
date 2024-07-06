@@ -10,7 +10,7 @@ class HostelController extends Controller
     public function index()
     {
         $hostels = Hostel::all();
-        return view('hostels.', compact('hostels'));
+        return view('hostels.index', compact('hostels'));
     }
 
     public function create()
@@ -30,24 +30,5 @@ class HostelController extends Controller
     {
         $hostel = Hostel::findOrFail($id);
         return view('hostels.show', compact('hostel'));
-    }
-
-    public function edit($id)
-    {
-        $hostel = Hostel::findOrFail($id);
-        return view('hostels.edit', compact('hostel'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $hostel = Hostel::findOrFail($id);
-        $hostel->update($request->all());
-        return redirect()->route('hostels.index');
-    }
-
-    public function destroy($id)
-    {
-        Hostel::findOrFail($id)->delete();
-        return redirect()->route('hostels.index');
     }
 }

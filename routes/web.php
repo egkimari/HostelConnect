@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -6,11 +5,16 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HostelController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\LandlordController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Landlord\DashboardController as LandlordDashboardController;
+use App\Http\Controllers\Landlord\HostelController as LandlordHostelController;
+use App\Http\Controllers\Landlord\ProfileController as LandlordProfileController;
+use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
+use App\Http\Controllers\Student\HostelController as StudentHostelController;
+use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\PaymentStatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,18 +33,18 @@ Route::get('/', function () {
 });
 
 // Route for home page
-Route::get('/home', function () {
-    return view('frontend.home');
-})->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-// Route for about page
+//Route for about page 
 Route::get('/about', function () {
     return view('frontend.about');
 })->name('about');
 
+
 // Route for contact page (GET and POST)
 Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
 
 // Route for displaying all hostels (resourceful)
 Route::resource('/hostels', HostelController::class)->names([
@@ -61,56 +65,37 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
-
 // Admin Routes
-Route::prefix('admin')->middleware('auth:admin')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
-    // Add more admin routes here
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
+    // Other admin routes can be defined here
 });
+
 
 // Landlord Routes
 Route::prefix('landlord')->middleware('auth:landlord')->group(function () {
-    Route::get('/', [LandlordController::class, 'index'])->name('landlord.dashboard');
-    // Add more landlord routes here
+    Route::get('/', [LandlordDashboardController::class, 'index'])->name('landlord.dashboard');
+    Route::resource('/hostels', LandlordHostelController::class)->names([
+        'index' => 'landlord.hostels.index',
+        'create' => 'landlord.hostels.create',
+        'store' => 'landlord.hostels.store',
+        'show' => 'landlord.hostels.show',
+        'edit' => 'landlord.hostels.edit',
+        'update' => 'landlord.hostels.update',
+        'destroy' => 'landlord.hostels.destroy',
+    ]);
+    Route::get('/profile', [LandlordProfileController::class, 'index'])->name('landlord.profile');
+    Route::post('/profile', [LandlordProfileController::class, 'update'])->name('landlord.profile.update');
 });
+// Student Profile contoller
 
-// Student Routes
-Route::prefix('student')->middleware('auth:student')->group(function () {
-    Route::get('/', [StudentController::class, 'index'])->name('student.dashboard');
-    // Add more student routes here
-});
+    Route::get('/profile', [StudentProfileController::class, 'index'])->name('student.profile');
+    Route::post('/profile', [StudentProfileController::class, 'update'])->name('student.profile.update');
 
-//Grouping routes that require user authentication
+// Grouping routes that require user authentication
 Route::middleware(['auth'])->group(function () {
     // Route for authenticated user's profile (example)
     Route::get('/profile', function () {
         return view('frontend.profile');
     });
 });
-
-// Example of a single route using HomeController
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-// Additional routes specific to your application can be added here
-
-
-Route::middleware(['auth'])->group(function () {
-    // Route for authenticated user's profile (example)
-    Route::get('/profile', function () {
-        return view('frontend.profile');
-    });
-});
-
-// Example of a single route using HomeController
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-// Hostel
-Route::get('/hostels', [HostelController::class, 'index'])->name('hostels.index');
-Route::get('/hostels/create', [HostelController::class, 'create'])->name('hostels.create');
-Route::post('/hostels', [HostelController::class, 'store'])->name('hostels.store');
-
-Route::get('/hostels/{id}', [HostelController::class, 'show'])->name('hostels.show');
-
-Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::get('/payment-status', [PaymentStatusController::class, 'index'])->name('payment-status');

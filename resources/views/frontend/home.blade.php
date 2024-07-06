@@ -2,54 +2,73 @@
 
 @section('title', 'Home')
 
-@section('content')
-    <!-- Welcome section with title -->
-    <section id="home" class="welcome-section">
-        <div class="container">
-            <h1 class="display-4">Welcome to HostelConnect - The Ultimate Hostel Solution To Your Housing Problem</h1>
+@section('content') <!-- Welcome section with background image -->
+
+
+<section class="welcome-section" style="background-image: url('{{ asset('\Images\home.jpg') }}');">
+        <div class="container text-center">
+            <h1>Welcome to HostelConnect - The Ultimate Hostel Solution To Your Housing Problem</h1>
         </div>
     </section>
 
-    <!-- Feature highlights section with slideshow -->
+    <!-- Feature highlights section -->
     <section class="feature-highlights">
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{ asset('images/hostel1.jpg') }}" alt="Hostel 1">
+        <div class="container">
+            <div class="row">
+                <!-- Hostel 1 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ asset('images/hostel1.jpg') }}" class="card-img-top" alt="Hostel 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Hostel 1</h5>
+                        </div>
+                    </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('images/hostel2.jpg') }}" alt="Hostel 2">
+                <!-- Hostel 2 - Add similar cards as needed -->
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ asset('images/hostel2.jpg') }}" class="card-img-top" alt="Hostel 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Hostel 2</h5>
+                        </div>
+                    </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('images/hostel3.jpg') }}" alt="Hostel 3">
+                <!-- Hostel 3 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ asset('images/hostel3.jpg') }}" class="card-img-top" alt="Hostel 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Hostel 3</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
     </section>
 
     <!-- Find a hostel section -->
     <section class="find-hostel">
-        <div class="container">
+        <div class="container text-center">
             <h2>Find a Hostel</h2>
             <p>Browse available hostels and find the perfect one for you.</p>
-            <a href="{{ url('/hostels') }}" class="btn btn-primary">More</a>
+            <a href="{{ route('hostels.index') }}" class="btn btn-primary">Browse Hostels</a>
         </div>
     </section>
 
     <!-- Manage bookings section -->
     <section class="manage-bookings">
-        <div class="container">
+        <div class="container text-center">
             <h2>Manage Your Bookings</h2>
             <p>Track your bookings and payments with ease.</p>
-            <a href="{{ url('/payment-status') }}" class="btn btn-primary">View Payment Status</a>
+            <a href="{{ route('payment.status') }}" class="btn btn-primary">View Payment Status</a>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2024 HostelConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
 @endsection

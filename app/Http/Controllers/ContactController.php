@@ -13,7 +13,7 @@ class ContactController extends Controller
      */
     public function showContactForm()
     {
-        return view('contact');
+        return view('frontend.contact'); // assuming your contact view is in the 'frontend' folder
     }
 
     /**
@@ -30,9 +30,8 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        // Logic to handle form submission, e.g., sending email
-        // Mail::to(config('mail.from.address'))->send(new ContactMail($request->all()));
+        // Handle the submission logic here
 
-        return redirect()->route('contact')->with('status', 'Your message has been sent!');
+        return redirect()->route('contact')->with('success', 'Message sent successfully!');
     }
 }
