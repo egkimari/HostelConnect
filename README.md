@@ -38,7 +38,3 @@ HostelConnect is a web-based platform that simplifies finding and managing hoste
 - Access the admin panel at `http://localhost:8000/admin`
 - Manage hostels and users through the admin interface
 
-## Deployment
-
-- Ensure environment variables are correctly set for production
-- Deploy to your preferred hosting provider
