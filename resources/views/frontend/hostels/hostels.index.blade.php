@@ -1,68 +1,85 @@
+<!-- resources/views/frontend/layout.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HostelConnect - Find Your Ideal Hostel</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>@yield('title', 'HostelConnect')</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS file -->
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
 </head>
 <body>
-
     <!-- Header Section -->
     <header>
-        <div class="container">
-            <h1>HostelConnect</h1>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#hostels">Hostels</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#login">Log in</a></li>
-                    <li><a href="#register">Register</a></li> <!-- Changed from Sign up to Register -->
+        <!-- Navigation bar with centered links -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- Brand logo -->
+            <a class="navbar-brand" href="{{ url('/') }}">HostelConnect</a>
+            <!-- Toggle button for mobile devices -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation links -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
+                        <!-- Home link -->
+                        <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item {{ Request::is('hostels') ? 'active' : '' }}">
+                        <!-- Hostels link -->
+                        <a class="nav-link" href="{{ url('/hostels') }}">Hostels</a>
+                    </li>
+                    <li class="nav-item {{ Request::is('about') ? 'active' : '' }}">
+                        <!-- About link -->
+                        <a class="nav-link" href="{{ url('/about') }}">About</a>
+                    </li>
+                    <li class="nav-item {{ Request::is('contact') ? 'active' : '' }}">
+                        <!-- Contact link -->
+                        <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
+                    </li>
+                    @guest
+                        <li class="nav-item {{ Request::is('login') ? 'active' : '' }}">
+                            <!-- Log in link -->
+                            <a class="nav-link" href="{{ route('login') }}">Log in</a>
+                        </li>
+                        <li class="nav-item {{ Request::is('register') ? 'active' : '' }}">
+                            <!-- Register link -->
+                            <a class="nav-link" href="{{ route('register') }}">Register</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                               document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    @endguest
                 </ul>
-            </nav>
-        </div>
+            </div>
+        </nav>
     </header>
 
     <!-- Main Content Section -->
     <main>
-        <section id="home" class="dark-bg">
-            <div class="container">
-                <div class="main-content">
-                    <h2>Welcome to HostelConnect</h2>
-                    <p>The Ultimate Hostel Solution To Your Housing Problem</p>
-                </div>
-
-                <div class="card-deck">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">Find a Hostel</h3>
-                            <p class="card-text">Browse through our extensive list of hostels and find the one that suits your needs.</p>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">Manage Your Bookings</h3>
-                            <p class="card-text">Keep track of your bookings and payments easily through our user-friendly interface.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        @yield('content')
     </main>
 
     <!-- Footer Section -->
     <footer>
-        <div class="container">
+        <div class="container text-center">
             <p>&copy; 2024 HostelConnect. All rights reserved.</p>
-            <div class="social-icons">
-                <a href="#">Instagram</a>
-                <a href="#">LinkedIn</a>
-            </div>
         </div>
     </footer>
 
+    <!-- JavaScript files -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -128,3 +128,31 @@ header nav ul li a {
 header nav ul li a:hover {
     color: #007bff;
 }
+/* styles.css  for home page(cards,nav.bar)*/ 
+body {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.dark-bg {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.card-deck .card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.card-deck .card-body {
+    padding: 20px;
+}
+
+.navbar-nav .nav-link {
+    color: #555;
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    color: #000;
+}
