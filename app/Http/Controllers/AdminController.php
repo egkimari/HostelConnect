@@ -1,12 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Hostel;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     // Method to show all hostels
     public function index()
     {
@@ -31,7 +39,7 @@ class AdminController extends Controller
         ]);
 
         Hostel::create($request->all());
-        return redirect()->route('admin.hostel.index');
+        return redirect()->route('admin.hostels.index');
     }
 
     // Method to show edit hostel form
@@ -53,7 +61,7 @@ class AdminController extends Controller
 
         $hostel = Hostel::findOrFail($id);
         $hostel->update($request->all());
-        return redirect()->route('admin.hostel.index');
+        return redirect()->route('admin.hostels.index');
     }
 
     // Method to delete a hostel
@@ -61,14 +69,14 @@ class AdminController extends Controller
     {
         $hostel = Hostel::findOrFail($id);
         $hostel->delete();
-        return redirect()->route('admin.hostel.index');
+        return redirect()->route('admin.hostels.index');
     }
 
     // Method to show all users
     public function manageUsers()
     {
         $users = User::all();
-        return view('admin.users', compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 
     // Method to show create user form
@@ -88,8 +96,11 @@ class AdminController extends Controller
             'role' => 'required'
         ]);
 
-        User::create($request->all());
-        return redirect()->route('admin.users');
+        $user = new User($request->except('password'));
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('admin.users.index');
     }
 
     // Method to show edit user form
@@ -111,8 +122,17 @@ class AdminController extends Controller
         ]);
 
         $user = User::findOrFail($id);
-        $user->update($request->all());
-        return redirect()->route('admin.users');
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.users.index');
     }
 
     // Method to delete a user
@@ -120,6 +140,6 @@ class AdminController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('admin.users');
+        return redirect()->route('admin.users.index');
     }
 }

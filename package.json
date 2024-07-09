@@ -2,18 +2,32 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build"
+        "dev": "npm run development",
+        "development": "mix",
+        "prod": "npm run production",
+        "production": "mix --production",
+        "watch": "mix watch",
+        "hot": "mix watch --hot",
+        "build": "vite build",
+        "test": "phpunit",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
         "@vitejs/plugin-vue": "^4.6.2",
         "axios": "^1.6.4",
-        "bootstrap": "^5.2.3",
+        "bootstrap": "^5.3.3",
+        "husky": "^9.0.11",
+        "laravel-mix": "^6.0.49",
         "laravel-vite": "^0.0.24",
         "laravel-vite-plugin": "^1.0.0",
-        "sass": "^1.56.1",
+        "sass": "^1.77.6",
         "vite": "^5.3.3",
         "vue": "^3.2.37"
+    },
+    "dependencies": {
+        "admin-lte": "^4.0.0-beta1",
+        "summernote": "^0.8.20"
     }
 }

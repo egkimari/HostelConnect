@@ -50,6 +50,16 @@
                             <a class="nav-link" href="{{ route('register') }}">Register</a>
                         </li>
                     @else
+                        <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+                            <!-- User Dashboard link -->
+                            <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
+                        </li>
+                        @if(auth()->user()->is_admin)
+                            <li class="nav-item {{ Request::is('admin') ? 'active' : '' }}">
+                                <!-- Admin Dashboard link -->
+                                <a class="nav-link" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('logout') }}"
                                onclick="event.preventDefault();

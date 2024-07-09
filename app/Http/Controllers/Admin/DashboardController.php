@@ -1,20 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Hostel;
-use App\Models\User;
 
-class AdminDashboardController extends Controller
+class DashboardController extends Controller
 {
     public function index()
     {
-        $hostelCount = Hostel::count();
-        $userCount = User::count();
-        $recentHostels = Hostel::latest()->take(5)->get();
-        $recentUsers = User::latest()->take(5)->get();
-
-        return view('admin.dashboard', compact('hostelCount', 'userCount', 'recentHostels', 'recentUsers'));
+        return view('admin.dashboard');
     }
 }

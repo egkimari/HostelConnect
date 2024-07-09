@@ -13,8 +13,9 @@ use App\Http\Controllers\Student\HostelController as StudentHostelController;
 use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\AboutController;
 use App\Http\Controllers\PaymentStatusController;
+use App\Models\User;  // Import User model for the check-roles route
+use Illuminate\Support\Facades\DB;  // Import DB facade for the check-roles route
 
 /*
 |--------------------------------------------------------------------------
@@ -27,24 +28,16 @@ use App\Http\Controllers\PaymentStatusController;
 |
 */
 
-// Route to the main layout (example)
-Route::get('/', function () {
-    return view('frontend.layout');
-});
-
 // Route for home page
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-//Route for about page 
+// Route for about page
 Route::get('/about', function () {
     return view('frontend.about');
 })->name('about');
-
-
 // Route for contact page (GET and POST)
 Route::get('/contact', [ContactController::class, 'showContactForm'])->name('contact');
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
-
 
 // Route for displaying all hostels (resourceful)
 Route::resource('/hostels', HostelController::class)->names([
@@ -65,12 +58,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
-// Admin Routes
-Route::middleware('auth:admin')->group(function () {
-    Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
-    // Other admin routes can be defined here
-});
-
 
 // Landlord Routes
 Route::prefix('landlord')->middleware('auth:landlord')->group(function () {
@@ -87,15 +74,42 @@ Route::prefix('landlord')->middleware('auth:landlord')->group(function () {
     Route::get('/profile', [LandlordProfileController::class, 'index'])->name('landlord.profile');
     Route::post('/profile', [LandlordProfileController::class, 'update'])->name('landlord.profile.update');
 });
-// Student Profile contoller
 
+// Student Routes
+Route::prefix('student')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard');
+    Route::resource('/hostels', StudentHostelController::class)->names([
+        'index' => 'student.hostels.index',
+        'show' => 'student.hostels.show',
+    ]);
     Route::get('/profile', [StudentProfileController::class, 'index'])->name('student.profile');
     Route::post('/profile', [StudentProfileController::class, 'update'])->name('student.profile.update');
+});
 
-// Grouping routes that require user authentication
-Route::middleware(['auth'])->group(function () {
-    // Route for authenticated user's profile (example)
-    Route::get('/profile', function () {
-        return view('frontend.profile');
-    });
+// Admin Routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    // Hostels Routes
+    Route::get('/hostels', [AdminController::class, 'index'])->name('admin.hostels.index');
+    Route::get('/hostels/create', [AdminController::class, 'createHostel'])->name('admin.hostels.create');
+    Route::post('/hostels', [AdminController::class, 'storeHostel'])->name('admin.hostels.store');
+    Route::get('/hostels/{id}/edit', [AdminController::class, 'editHostel'])->name('admin.hostels.edit');
+    Route::put('/hostels/{id}', [AdminController::class, 'updateHostel'])->name('admin.hostels.update');
+    Route::delete('/hostels/{id}', [AdminController::class, 'destroyHostel'])->name('admin.hostels.destroy');
+
+    // Users Routes
+    Route::get('/users', [AdminController::class, 'manageUsers'])->name('admin.users.index');
+    Route::get('/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
+    Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+    Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+    Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+    Route::delete('/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
+});
+
+// Check Roles Route (for debugging or admin purposes)
+Route::get('/check-roles', function () {
+    $users = User::select('id', 'name', 'email', 'is_admin')->get();
+    $admins = DB::table('admins')->get();
+    return response()->json(['users' => $users, 'admins' => $admins]);
 });
